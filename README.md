@@ -10,6 +10,8 @@ python "Obstacle Detection with Audio.py"
 
 Requires `numpy` and `matplotlib`. It pops up 4 plots in sequence (each blocks until closed): the simulated per-microphone waveforms, a heatmap of that raw data, the reconstructed obstacle-location image for a single simulated obstacle, and a second reconstruction from an embedded real multi-obstacle dataset. Edit the `params = setup(...)` blocks to change the mic array size/spacing, source position, wave speed, or obstacle location.
 
+See [`APL Assignment 7 Report - Sound Localization.pdf`](APL%20Assignment%207%20Report%20-%20Sound%20Localization.pdf) for the original assignment write-up this code was submitted with, including the full parameter-sweep experiments and derivations the summary below is based on.
+
 ## How it works
 
 **Forward model (simulating what the mics hear):** A source at a fixed point emits a short pulse, modeled as `sinc(SincP * t)`. The pulse travels out, reflects off an obstacle at some point, and arrives at each microphone in a linear array. Each mic hears a delayed copy of the pulse, where the delay is the total path length `source → obstacle → mic` divided by the wave speed `C`. Since the mics sit in a line and the obstacle is off to one side, every mic is a slightly different distance from the obstacle, so each gets a slightly different delay. Plotting all mic signals stacked by position (`waveforms.png`) or as a mic-vs-sample heatmap (`raw_heatmap.png`) shows this directly: the echo traces a curved band across the array, since delay is a nonlinear (square-root) function of mic position.
